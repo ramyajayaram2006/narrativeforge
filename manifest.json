@@ -1,0 +1,28 @@
+{
+  "name": "NarrativeForge",
+  "short_name": "NarrativeForge",
+  "description": "AI-powered story co-writer for serious writers",
+  "start_url": "/",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#0D0E14",
+  "theme_color": "#4D6BFE",
+  "lang": "en",
+  "categories": ["productivity", "education", "entertainment"],
+  "icons": [
+    {
+      "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%234D6BFE'/><text y='.9em' font-size='80' x='10'>◆</text></svg>",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ],
+  "screenshots": [],
+  "shortcuts": [
+    {
+      "name": "New Story",
+      "url": "/?view=dashboard",
+      "description": "Go to dashboard to create a new story"
+    }
+  ]
+}

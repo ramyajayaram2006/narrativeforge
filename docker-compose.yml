@@ -1,0 +1,58 @@
+version: "3.9"
+
+services:
+  app:
+    build: .
+    container_name: narrativeforge
+    ports: ["8501:8501"]
+    volumes:
+      - narrativeforge_db:/data
+    environment:
+      - NARRATIVEFORGE_DB=/data/narrativeforge.db
+      - NARRATIVEFORGE_MODEL=${NARRATIVEFORGE_MODEL:-llama3.2}
+      - OLLAMA_HOST=http://ollama:11434
+    depends_on:
+      ollama:
+        condition: service_healthy
+    restart: unless-stopped
+    networks: [nf_net]
+
+  ollama:
+    image: ollama/ollama:latest
+    container_name: narrativeforge_ollama
+    ports: ["11434:11434"]
+    volumes:
+      - ollama_models:/root/.ollama
+    entrypoint: >
+      /bin/sh -c "
+        ollama serve &
+        sleep 8
+        ollama pull $${NARRATIVEFORGE_MODEL:-llama3.2}
+        wait
+      "
+    environment:
+      - NARRATIVEFORGE_MODEL=${NARRATIVEFORGE_MODEL:-llama3.2}
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:11434/api/tags"]
+      interval: 15s
+      timeout: 10s
+      retries: 10
+      start_period: 40s
+    restart: unless-stopped
+    networks: [nf_net]
+    # Uncomment for NVIDIA GPU:
+    # deploy:
+    #   resources:
+    #     reservations:
+    #       devices:
+    #         - driver: nvidia
+    #           count: 1
+    #           capabilities: [gpu]
+
+volumes:
+  narrativeforge_db:
+  ollama_models:
+
+networks:
+  nf_net:
+    driver: bridge

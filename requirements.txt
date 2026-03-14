@@ -1,0 +1,10 @@
+# NarrativeForge dependencies
+streamlit>=1.35,<2.0
+python-docx==1.1.0   # imported as 'from docx import Document'
+requests==2.31.0
+bcrypt==4.1.2
+psycopg2-binary==2.9.9
+pandas>=2.0
+
+# PDF export (optional — falls back gracefully if not installed)
+reportlab==4.2.2
