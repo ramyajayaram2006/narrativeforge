@@ -1,15 +1,8 @@
-# Railway deployment config — https://railway.app
 [build]
-builder = "NIXPACKS"
+builder = "dockerfile"
 
 [deploy]
-startCommand = "streamlit run app.py --server.port=$PORT --server.address=0.0.0.0 --server.headless=true"
+startCommand = "streamlit run app.py --server.port=8501 --server.address=0.0.0.0 --server.headless=true --server.enableCORS=false --server.enableXsrfProtection=false"
 healthcheckPath = "/_stcore/health"
-healthcheckTimeout = 60
-restartPolicyType = "ON_FAILURE"
-restartPolicyMaxRetries = 3
-
-[environments.production.variables]
-NARRATIVEFORGE_MODEL = "llama3.2"
-STREAMLIT_BROWSER_GATHER_USAGE_STATS = "false"
-STREAMLIT_SERVER_HEADLESS = "true"
+healthcheckTimeout = 300
+restartPolicyType = "on_failure"
